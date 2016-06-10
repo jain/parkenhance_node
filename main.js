@@ -5,6 +5,12 @@ var request = require('request');
 
 // get data about nearby parking lots
 app.get('/near_lots', function (req, res) {
+    console.log('hi')
+    var paramCount = 0;
+    for (key in req.query){
+        paramCount++;
+    }
+    console.log(paramCount)
     request('https://parkenhance.firebaseio.com//.json?print=pretty', function (error, response, body) {
         if (!error && response.statusCode == 200) {
 
