@@ -3,25 +3,36 @@ var app = express();
 var http = require('http');
 var request = require('request');
 
+//git push heroku master
+
+
 // get data about nearby parking lots
 app.get('/near_lots', function (req, res) {
-    console.log('hi')
-    var paramCount = 0;
-    for (key in req.query){
-        paramCount++;
+    console.log('hi');
+    paramPresence = false;
+    if ('lat' in req.query && 'long' in req.query){
+        lat = parseFloat(req.query['lat']);
+        long = parseFloat(req.query['long']);
+        if (!(isNaN(lat)||isNaN(long))){
+            paramPresence = true
+        }
     }
-    console.log(paramCount)
     request('https://parkenhance.firebaseio.com//.json?print=pretty', function (error, response, body) {
         if (!error && response.statusCode == 200) {
 
             var lots = JSON.parse(response.body);
-            var lotStatus = {}
+            var lotStatus = {};
             for (var lot in lots){
-                var details = {}
-                details['latitude'] = lots[lot]['latitude']
-                details['longitude'] = lots[lot]['longitude']
-                details['empty_spots'] = lots[lot]['empty_spots']
-                details['parking_spots'] = lots[lot]['parking_spots']
+                if (paramPresence){
+                    if (Math.abs(lat-parseFloat(lots[lot]['latitude']))>0.01||Math.abs(long-parseFloat(lots[lot]['longitude']))>0.01){
+                        continue;
+                    }
+                }
+                var details = {};
+                details['latitude'] = lots[lot]['latitude'];
+                details['longitude'] = lots[lot]['longitude'];
+                details['empty_spots'] = lots[lot]['empty_spots'];
+                details['parking_spots'] = lots[lot]['parking_spots'];
                 var ratio = details['empty_spots']/details['parking_spots'];
                 switch (true){
                     case (ratio==0): details['status'] = 'full'; break;
