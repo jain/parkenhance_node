@@ -17,7 +17,7 @@ app.get('/near_lots', function (req, res) {
             paramPresence = true
         }
     }
-    request('https://parkenhance.firebaseo.com//.json?print=pretty', function (error, response, body) {
+    request('https://parkenhance.firebaseio.com//.json?print=pretty', function (error, response, body) {
         if (!error && response.statusCode == 200) {
 
             var lots = JSON.parse(response.body);
