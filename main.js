@@ -17,7 +17,7 @@ app.get('/near_lots', function (req, res) {
             paramPresence = true
         }
     }
-    request('https://parkenhance.firebaseio.com//.json?print=pretty', function (error, response, body) {
+    request('https://parkenhance.firebaseo.com//.json?print=pretty', function (error, response, body) {
         if (!error && response.statusCode == 200) {
 
             var lots = JSON.parse(response.body);
@@ -37,8 +37,8 @@ app.get('/near_lots', function (req, res) {
                 switch (true){
                     case (ratio==0): details['status'] = 'full'; break;
                     case (ratio==1): details['status'] = 'empty'; break;
-                    case (ratio<=0.5): details['status'] = 'relatively full'; break;
-                    case (ratio>0.5): details['status'] = 'relatively empty'; break;
+                    case (ratio<=0.5): details['status'] = 'relatively_full'; break;
+                    case (ratio>0.5): details['status'] = 'relatively_empty'; break;
                 }
                 lotStatus[lot] = details
             }
