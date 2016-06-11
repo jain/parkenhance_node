@@ -96,7 +96,7 @@ app.post('/hi', function (req, res) {
         res.send(JSON.stringify(a, null, 2));
         return
     }
-    res.send('fail\n');
+    res.status(404).send('fail\n');
 });
 
 app.post('/update_spot', function (req, res) {
