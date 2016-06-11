@@ -92,6 +92,7 @@ app.post('/hi', function (req, res) {
             a = key;
         }
         a['ack'] = true
+        console.log(JSON.stringify(a, null, 2))
         res.send(JSON.stringify(a, null, 2));
         return
     }
