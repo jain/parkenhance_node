@@ -82,22 +82,13 @@ app.get('/update_spot', function (req, res) {
 app.post('/hi', function (req, res) {
     console.log(req.body)
     j = req.body
-    for (var key in j) {
-        console.log(key)
-        var a = key
-
-        try {
-            a = JSON.parse(a);
-        } catch (e) {
-            a = key;
-        }
-        a['ack'] = true
-        console.log('pain')
-        console.log(JSON.stringify(a, null, 2))
-        res.send(JSON.stringify(a, null, 2));
-        return
+    try {
+        j = JSON.parse(j);
+    } catch (e) {
+        j = req.body;
     }
-    res.status(404).send('fail\n');
+    j['ack'] = true
+    res.send(JSON.stringify(j, null, 2));
 });
 
 app.post('/update_spot', function (req, res) {
