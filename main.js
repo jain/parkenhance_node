@@ -85,14 +85,14 @@ app.post('/hi', function (req, res) {
     for (var key in j) {
         console.log(key)
         var a = key
-        
+
         try {
             a = JSON.parse(a);
         } catch (e) {
             a = key;
         }
         a['ack'] = true
-        res.send(JSON.stringify(a, null, 2) + '\n');
+        res.send(JSON.stringify(a, null, 2));
         return
     }
     res.send('fail\n');
