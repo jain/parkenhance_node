@@ -5,7 +5,7 @@ var request = require('request');
 var bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({extended: false}))
 //git push heroku master
 
 
@@ -77,14 +77,20 @@ app.get('/update_spot', function (req, res) {
     });
 });
 
+// curl -X POST -d '{"0":123123}' 'https://parkenhance.herokuapp.com/hi'
+
 app.post('/hi', function (req, res) {
     console.log(req.body)
     j = req.body
-    for (var key in j){
+    for (var key in j) {
         console.log(key)
-        var a = JSON.parse(key)
-        console.log(a)
-        console.log(a['0'])
+        var a = key
+        
+        try {
+            a = JSON.parse(a);
+        } catch (e) {
+            a = key;
+        }
         a['ack'] = true
         res.send(JSON.stringify(a, null, 2) + '\n');
         return
