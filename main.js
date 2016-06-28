@@ -143,9 +143,9 @@ app.post('/reserve_spot', function (req, res) {
     console.log('res')
     console.log(req.params)
     if ('android_id' in input && 'position' in input && 'name' in input) {
-        android_id = req.param['android_id'];
-        name = req.param['name'];
-        position = req.param['position'];
+        android_id = input['android_id'];
+        name = input['name'];
+        position = input['position'];
         console.log(name)
         console.log(position)
         console.log(android_id)
