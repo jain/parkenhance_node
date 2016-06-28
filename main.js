@@ -161,9 +161,9 @@ app.post('/reserve_spot', function (req, res) {
                 return
             }
         });
-        var stat = {}
-        stat['status'] = 'well done'
-        res.send(JSON.stringify(stat, null, 2));
+        //var stat = {}
+        //stat['status'] = 'well done'
+        //res.send(JSON.stringify(stat, null, 2));
         return
     }
     res.status(404).send("502 Missing Params");
