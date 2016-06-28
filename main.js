@@ -141,7 +141,6 @@ app.post('/reserve_spot', function (req, res) {
         input = req.body;
     }
     console.log('res')
-    console.log(req.params)
     if ('android_id' in input && 'position' in input && 'name' in input) {
         android_id = input['android_id'];
         name = input['name'];
@@ -149,14 +148,15 @@ app.post('/reserve_spot', function (req, res) {
         console.log(name)
         console.log(position)
         console.log(android_id)
-        /*request.patch('https://parkenhance.firebaseio.com/' + name + '/map/0/0/0', 1, function (error, response, body) {
+        request.patch('https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/'+
+            position[2], 1, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 res.send(response);
             } else {
                 res.status(404).send("501 Error Firebase Query");
                 return
             }
-        });*/
+        });
         var stat = {}
         stat['status'] = 'well done'
         res.send(JSON.stringify(stat, null, 2));
