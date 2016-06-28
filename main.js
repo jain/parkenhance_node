@@ -151,8 +151,10 @@ app.post('/reserve_spot', function (req, res) {
         request.patch('https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/'+
             position[2], 1, function (error, response, body) {
             if (!error && response.statusCode == 200) {
+                console.log('yay')
                 res.send(response);
             } else {
+                console.log('boo')
                 res.status(404).send("501 Error Firebase Query");
                 return
             }
