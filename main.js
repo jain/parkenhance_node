@@ -25,6 +25,31 @@ app.get("/client_token", function (req, res) {
     });
 });
 
+// get info about parking lot
+app.get('/get_parking_lot_info', function (req, res) {
+    console.log('parking lot info');
+    paramPresence = false;
+    if ('name' in req.query) {
+        name = req.query['name'];
+    } else {
+        res.status(404).send("Missing Params");
+        return
+    }
+    request.get('https://parkenhance.firebaseio.com/lots/' + name + '/map/.json?print=pretty', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+
+            var map = JSON.parse(response.body);
+            var parkingMap = {};
+            parkingMap['map'] = map;
+            res.send(JSON.stringify(parkingMap, null, 2));
+        } else {
+            res.status(404).send("501 Error Firebase Query");
+        }
+    })
+
+});
+
+
 // get data about nearby parking lots
 app.get('/near_lots', function (req, res) {
     console.log('hi');
