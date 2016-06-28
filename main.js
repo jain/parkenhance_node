@@ -4,10 +4,26 @@ var http = require('http');
 var request = require('request');
 var bodyParser = require('body-parser')
 
+var braintree = require("braintree");
+var gateway = braintree.connect({
+    environment: braintree.Environment.Sandbox,
+    merchantId: "useYourMerchantId",
+    publicKey: "useYourPublicKey",
+    privateKey: "useYourPrivateKey"
+});
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 //git push heroku master
 
+
+// client token
+
+app.get("/client_token", function (req, res) {
+    gateway.clientToken.generate({}, function (err, response) {
+        res.send(response.clientToken);
+    });
+});
 
 // get data about nearby parking lots
 app.get('/near_lots', function (req, res) {
@@ -20,7 +36,7 @@ app.get('/near_lots', function (req, res) {
             paramPresence = true
         }
     }
-    request.get('https://parkenhance.firebaseio.com//.json?print=pretty', function (error, response, body) {
+    request.get('https://parkenhance.firebaseio.com/lots/.json?print=pretty', function (error, response, body) {
         if (!error && response.statusCode == 200) {
 
             var lots = JSON.parse(response.body);
@@ -111,6 +127,8 @@ app.post('/update_spot', function (req, res) {
     }
     res.status(404).send("502 Missing Params");
 });
+
+
 
 app.set('port', (process.env.PORT || 5000));
 
