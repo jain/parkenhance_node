@@ -37,7 +37,6 @@ app.get('/get_parking_lot_info', function (req, res) {
     }
     request.get('https://parkenhance.firebaseio.com/lots/' + name + '/map/.json?print=pretty', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-
             var map = JSON.parse(response.body);
             var parkingMap = {};
             parkingMap['map'] = map;
@@ -148,11 +147,14 @@ app.post('/reserve_spot', function (req, res) {
         console.log(name)
         console.log(position)
         console.log(android_id)
-        request.patch('https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/'+
-            position[2], 1, function (error, response, body) {
+        url = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/'+
+            position[2]
+        console.log(url)
+        request.patch(url, 1, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log('yay')
                 res.send(response);
+                return
             } else {
                 console.log('boo')
                 res.status(404).send("501 Error Firebase Query");
