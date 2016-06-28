@@ -132,6 +132,31 @@ app.post('/hi', function (req, res) {
     res.send(JSON.stringify(j, null, 2));
 });
 
+app.post('/reserve_spot', function (req, res) {
+    console.log(req.params)
+    if ('android_id' in req.param && 'position' in req.param && 'name' in req.param) {
+        android_id = req.param['android_id'];
+        name = req.param['name'];
+        position = req.param['position'];
+        console.log(name)
+        console.log(position)
+        console.log(android_id)
+        /*request.patch('https://parkenhance.firebaseio.com/' + name + '/map/0/0/0', 1, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.send(response);
+            } else {
+                res.status(404).send("501 Error Firebase Query");
+                return
+            }
+        });*/
+        var stat = {}
+        stat['status'] = 'well done'
+        res.send(JSON.stringify(stat, null, 2));
+        return
+    }
+    res.status(404).send("502 Missing Params");
+});
+
 app.post('/update_spot', function (req, res) {
     console.log(req.params)
     if ('name' in req.param && 'i' in req.param && 'j' in req.param && 'k' in req.param) {
@@ -152,7 +177,6 @@ app.post('/update_spot', function (req, res) {
     }
     res.status(404).send("502 Missing Params");
 });
-
 
 
 app.set('port', (process.env.PORT || 5000));
