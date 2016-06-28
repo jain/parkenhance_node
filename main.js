@@ -133,6 +133,7 @@ app.post('/hi', function (req, res) {
 });
 
 app.post('/reserve_spot', function (req, res) {
+    console.log('hi')
     console.log(req.params)
     if ('android_id' in req.param && 'position' in req.param && 'name' in req.param) {
         android_id = req.param['android_id'];
