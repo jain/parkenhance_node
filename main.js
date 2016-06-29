@@ -152,7 +152,7 @@ app.post('/reserve_spot', function (req, res) {
         d = {}
         d[''+position[2]] = 1;
         request({
-            url: 'https://parkenhance.firebaseio.com/lot1/map/0/0/.json',
+            url: urls,
             method: 'PATCH',
             json: d
         }, function (error, response, body) {
