@@ -148,9 +148,10 @@ app.post('/reserve_spot', function (req, res) {
         console.log(position)
         console.log(android_id)
         urls = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/.json'
-        console.log(url)
+        console.log(urls)
         d = {}
         d[''+position[2]] = 1;
+        console.log(d)
         request({
             url: urls,
             method: 'PATCH',
