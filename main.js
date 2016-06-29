@@ -147,10 +147,15 @@ app.post('/reserve_spot', function (req, res) {
         console.log(name)
         console.log(position)
         console.log(android_id)
-        url = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/'+
-            position[2]
+        urls = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/.json'
         console.log(url)
-        request.patch(url, 1, function (error, response, body) {
+        d = {}
+        d[''+position[2]] = 1;
+        request({
+            url: 'https://parkenhance.firebaseio.com/lot1/map/0/0/.json',
+            method: 'PATCH',
+            json: d
+        }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log('yay')
                 res.send(response);
