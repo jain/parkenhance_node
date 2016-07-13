@@ -82,7 +82,6 @@ app.get("/owner_message", function (req, res) {
 });
 
 
-
 // client token
 
 app.get("/client_token", function (req, res) {
@@ -92,7 +91,6 @@ app.get("/client_token", function (req, res) {
         res.send(response.clientToken);
     });
 });
-
 
 
 app.post('/payment', function (req, res) {
@@ -236,10 +234,10 @@ app.post('/reserve_spot', function (req, res) {
         console.log(name)
         console.log(position)
         console.log(android_id)
-        urls = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/'+position[0]+'/'+position[1]+'/.json'
+        urls = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/' + position[0] + '/' + position[1] + '/.json'
         console.log(urls)
         d = {}
-        d[''+position[2]] = 1;
+        d['' + position[2]] = 1;
         console.log(d)
         request({
             url: urls,
@@ -249,6 +247,25 @@ app.post('/reserve_spot', function (req, res) {
             if (!error && response.statusCode == 200) {
                 console.log('yay')
                 res.send(response);
+                urls2 = 'https://parkenhance.firebaseio.com/lots/users/.json'
+                j1 = {}
+                j1['x'] = position[0]
+                j1['y'] = position[1]
+                j1['z'] = position[2]
+                j1['lot'] = name
+                j = {}
+                j[android_id] = j1
+                console.log('pika')
+                console.log(j)
+                request({
+                    url: urls2,
+                    method: 'PATCH',
+                    json: j
+                }, function (error2, response2, body2) {
+                    console.log(error2)
+                    console.log(response2)
+                    console.log(body2)
+                });
                 return
             } else {
                 console.log('boo')
