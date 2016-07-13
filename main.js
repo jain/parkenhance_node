@@ -218,17 +218,34 @@ app.post('/hi', function (req, res) {
     res.send(JSON.stringify(j, null, 2));
 });
 
-app.get('/test_res', function (req, res) {
-    request.get('https://parkenhance.firebaseio.com/users/.json?print=pretty', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
+app.get('/cancel', function (req, res) {
+    console.log(req.query)
+    if ('id' in req.query) {
+        android_id = req.query['id'];
+        request.get('https://parkenhance.firebaseio.com/users/.json?print=pretty', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
 
-            var users = JSON.parse(response.body);
-            console.log(users)
-            if ('userid12' in users){
-                console.log('yipee')
+                var users = JSON.parse(response.body);
+                console.log(users)
+                if (android_id in users) {
+                    user = users[android_id]
+                    urls3 = 'https://parkenhance.firebaseio.com/lots/' + user['lot'] + '/map/' + user['x'] + '/' + user['y'] + '/.json'
+                    console.log(urls3)
+                    d3 = {}
+                    d3['' + user['z']] = 0;
+                    console.log(d3)
+                    request({
+                        url: urls3,
+                        method: 'PATCH',
+                        json: d3
+                    }, function (error4, response4, body4) {
+
+                    })
+                }
             }
-        }
-    })
+        });
+    }
+    res.send('done');
 })
 
 app.post('/reserve_spot', function (req, res) {
