@@ -50,11 +50,11 @@ app.post('/payment', function (req, res) {
 
 app.post('/payment', function (req, res) {
     var amount = req.body.amount;
-    var paymentMethodNonce = req.body.payment_method_nonce;
+    //var paymentMethodNonce = req.body.payment_method_nonce;
 
     var sale = {
         amount: amount,
-        paymentMethodNonce: paymentMethodNonce
+        paymentMethodNonce: "fake-valid-nonce"
     };
 
     gateway.transaction.sale(sale, function (error, response) {
