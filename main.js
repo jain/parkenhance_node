@@ -37,7 +37,7 @@ app.post('/payment', function (req, res) {
 
     var sale = {
         amount: amount,
-        paymentMethodNonce: "fake-valid-nonce"
+        paymentMethodNonce: paymentMethodNonce
     };
 
     gateway.transaction.sale(sale, function (error, response) {
