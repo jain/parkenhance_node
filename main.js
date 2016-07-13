@@ -231,9 +231,6 @@ app.post('/reserve_spot', function (req, res) {
         android_id = input['android_id'];
         name = input['name'];
         position = input['position'];
-        console.log(name)
-        console.log(position)
-        console.log(android_id)
         urls = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/' + position[0] + '/' + position[1] + '/.json'
         console.log(urls)
         d = {}
@@ -246,7 +243,6 @@ app.post('/reserve_spot', function (req, res) {
         }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log('yay')
-                res.send(response);
                 urls2 = 'https://parkenhance.firebaseio.com/lots/users/.json'
                 j1 = {}
                 j1['x'] = position[0]
@@ -266,6 +262,7 @@ app.post('/reserve_spot', function (req, res) {
                     console.log(response2)
                     console.log(body2)
                 });
+                res.send(response);
                 return
             } else {
                 console.log('boo')
