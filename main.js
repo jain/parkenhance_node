@@ -231,6 +231,27 @@ app.post('/reserve_spot', function (req, res) {
         android_id = input['android_id'];
         name = input['name'];
         position = input['position'];
+        request.get('https://parkenhance.firebaseio.com/lots/.json?print=pretty', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+
+                var users = JSON.parse(response.body);
+                if (android_id in users.keys()){
+                    user = users[android_id]
+                    urls3 = 'https://parkenhance.firebaseio.com/lots/' + user['lot'] + '/map/' + user['x'] + '/' + user['y'] + '/.json'
+                    console.log(urls)
+                    d3 = {}
+                    d3['' + user['z']] = 0;
+                    console.log(d)
+                    request({
+                        url: urls3,
+                        method: 'PATCH',
+                        json: d3
+                    }, function (error4, response4, body4) {
+
+                    })
+                }
+            }
+        });
         urls = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/' + position[0] + '/' + position[1] + '/.json'
         console.log(urls)
         d = {}
