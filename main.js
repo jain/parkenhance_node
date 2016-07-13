@@ -48,7 +48,9 @@ app.post('/payment', function (req, res) {
 });
 
 
-app.get('/payment', function (req, res) {
+
+
+app.post('/payment', function (req, res) {
     //var amount = req.body.amount;
     //var paymentMethodNonce = req.body.payment_method_nonce;
 
@@ -67,8 +69,8 @@ app.get('/payment', function (req, res) {
     gateway.transaction.sale({
         amount: "5.00",
         paymentMethodNonce: "fake-valid-nonce",
-        options: {
-            submitForSettlement: true
+        credit_card: {
+            number: "4111111111111111"
         }
     }, function (err, response) {
         if (!err && response.success) {
