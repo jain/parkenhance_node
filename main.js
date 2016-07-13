@@ -32,10 +32,10 @@ app.get("/client_token", function (req, res) {
 
 
 app.post('/payment', function (req, res) {
-    //var amount = req.body.amount;
-    //var paymentMethodNonce = req.body.payment_method_nonce;
+    var amount = req.body.amount;
+    var paymentMethodNonce = req.body.payment_method_nonce;
 
-    /*var sale = {
+    var sale = {
         amount: amount,
         paymentMethodNonce: "fake-valid-nonce"
     };
@@ -46,7 +46,8 @@ app.post('/payment', function (req, res) {
         } else {
             res.send(response);
         }
-    });*/
+    });
+    /*
     console.log("hi")
     var sale = {
         amount: "5.00",
@@ -63,7 +64,7 @@ app.post('/payment', function (req, res) {
             console.log(response)
             res.send(response);
         }
-    });
+    });*/
 });
 
 
