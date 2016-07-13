@@ -8,9 +8,9 @@ var cors = require('cors')
 var braintree = require("braintree");
 var gateway = braintree.connect({
     environment: braintree.Environment.Sandbox,
-    merchantId: "useYourMerchantId",
-    publicKey: "useYourPublicKey",
-    privateKey: "useYourPrivateKey"
+    merchantId: "z4j2zkrf28vfnwxp",
+    publicKey: "ms7m8npqyqrbcywv",
+    privateKey: "d4d90187a7f3cb03d174a2b24b1af1a9"
 });
 
 app.use(bodyParser.json())
@@ -23,9 +23,30 @@ app.use(cors())
 
 app.get("/client_token", function (req, res) {
     gateway.clientToken.generate({}, function (err, response) {
+        console.log(err)
+        console.log(response)
         res.send(response.clientToken);
     });
 });
+
+app.post('/payment', function (req, res) {
+    var amount = req.body.amount;
+    var paymentMethodNonce = req.body.payment_method_nonce;
+
+    var sale = {
+        amount: amount,
+        paymentMethodNonce: paymentMethodNonce
+    };
+
+    gateway.transaction.sale(sale, function (error, response) {
+        if (!error && response.success) {
+            res.send('Payment done');
+        } else {
+            res.send(response);
+        }
+    });
+});
+
 
 // get info about parking lot
 app.get('/get_parking_lot_info', function (req, res) {
