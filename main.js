@@ -218,6 +218,66 @@ app.post('/hi', function (req, res) {
     res.send(JSON.stringify(j, null, 2));
 });
 
+app.post('/reserve_spot', function (req, res) {
+    console.log(req.body)
+    input = req.body
+    try {
+        input = JSON.parse(input);
+    } catch (e) {
+        input = req.body;
+    }
+    console.log('res')
+    if ('android_id' in input && 'position' in input && 'name' in input) {
+        android_id = input['android_id'];
+        name = input['name'];
+        position = input['position'];
+        urls = 'https://parkenhance.firebaseio.com/lots/' + name + '/map/' + position[0] + '/' + position[1] + '/.json'
+        console.log(urls)
+        d = {}
+        d['' + position[2]] = 1;
+        console.log(d)
+        request({
+            url: urls,
+            method: 'PATCH',
+            json: d
+        }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                console.log('yay')
+                urls2 = 'https://parkenhance.firebaseio.com/users/.json'
+                j1 = {}
+                j1['x'] = position[0]
+                j1['y'] = position[1]
+                j1['z'] = position[2]
+                j1['lot'] = name
+                j = {}
+                j[android_id] = j1
+                console.log('pika')
+                console.log(j)
+                request({
+                    url: urls2,
+                    method: 'PATCH',
+                    json: j
+                }, function (error2, response2, body2) {
+                    console.log(error2)
+                    console.log(response2)
+                    console.log(body2)
+                });
+                res.send(response);
+                return
+            } else {
+                console.log('boo')
+                res.status(404).send("501 Error Firebase Query");
+                return
+            }
+        });
+        //var stat = {}
+        //stat['status'] = 'well done'
+        //res.send(JSON.stringify(stat, null, 2));
+        return
+    }
+    res.status(404).send("502 Missing Params");
+});
+
 app.post('/update_spot', function (req, res) {
     console.log(req.params)
     if ('name' in req.param && 'i' in req.param && 'j' in req.param && 'k' in req.param) {
