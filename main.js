@@ -48,8 +48,8 @@ app.post('/payment', function (req, res) {
 });
 
 
-app.post('/payment', function (req, res) {
-    var amount = req.body.amount;
+app.get('/payment', function (req, res) {
+    //var amount = req.body.amount;
     //var paymentMethodNonce = req.body.payment_method_nonce;
 
     /*var sale = {
@@ -70,8 +70,8 @@ app.post('/payment', function (req, res) {
         options: {
             submitForSettlement: true
         }
-    }, function (err, result) {
-        if (!error && response.success) {
+    }, function (err, response) {
+        if (!err && response.success) {
             res.send('Payment done');
         } else {
             res.send(response);
