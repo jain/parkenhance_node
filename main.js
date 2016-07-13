@@ -241,6 +241,13 @@ app.get('/cancel', function (req, res) {
                     }, function (error4, response4, body4) {
 
                     })
+                    url4 ='https://parkenhance.firebaseio.com/users/'+android_id+'/.json?print=pretty'
+                    request({
+                        url: urls4,
+                        method: 'DELETE'
+                    }, function (error4, response4, body4) {
+
+                    })
                 }
             }
         });
