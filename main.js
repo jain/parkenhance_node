@@ -238,10 +238,10 @@ app.post('/reserve_spot', function (req, res) {
                 if (android_id in users.keys()){
                     user = users[android_id]
                     urls3 = 'https://parkenhance.firebaseio.com/lots/' + user['lot'] + '/map/' + user['x'] + '/' + user['y'] + '/.json'
-                    console.log(urls)
+                    console.log(urls3)
                     d3 = {}
                     d3['' + user['z']] = 0;
-                    console.log(d)
+                    console.log(d3)
                     request({
                         url: urls3,
                         method: 'PATCH',
