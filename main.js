@@ -19,6 +19,38 @@ app.use(cors())
 
 
 
+app.get("/owner_message", function (req, res) {
+    if ('msg' in req.query && 'id' in req.query && 'lot' in req.query) {
+        console.log(req.query)
+        msg = req.query['msg'];
+        id = req.query['id'];
+        lot = req.query['lot'];
+        urls = 'https://parkenhance.firebaseio.com/lots/' + lot + '/msgs/.json'
+        d = {}
+        d[id] = msg;
+        console.log(d)
+        request({
+            url: urls,
+            method: 'PATCH',
+            json: d
+        }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                console.log('yay')
+                res.send(response);
+                return
+            } else {
+                console.log('boo')
+                res.status(404).send("501 Error Firebase Query");
+                return
+            }
+        });
+    } else {
+        res.status(404).send("missing params");
+    }
+});
+
+
+
 // client token
 
 app.get("/client_token", function (req, res) {
@@ -47,24 +79,6 @@ app.post('/payment', function (req, res) {
             res.send(response);
         }
     });
-    /*
-    console.log("hi")
-    var sale = {
-        amount: "5.00",
-        paymentMethodNonce: "fake-valid-nonce",
-        credit_card: {
-            number: "4111111111111111"
-        }
-    }
-    console.log(sale)
-    gateway.transaction.sale(sale, function (err, response) {
-        if (!err && response.success) {
-            res.send('Payment done');
-        } else {
-            console.log(response)
-            res.send(response);
-        }
-    });*/
 });
 
 
