@@ -9,7 +9,7 @@
     "request": "^2.72.0",
     "body-parser": "^1.15.1",
     "braintree":"^1.39.0",
-    "cors":"^3.9.5"
+    "cors":"^2.7.1"
   },
   "engines": {
     "node": "0.10.37"
