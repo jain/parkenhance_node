@@ -29,25 +29,6 @@ app.get("/client_token", function (req, res) {
     });
 });
 
-app.post('/payment', function (req, res) {
-    var amount = req.body.amount;
-    var paymentMethodNonce = req.body.payment_method_nonce;
-
-    var sale = {
-        amount: amount,
-        paymentMethodNonce: paymentMethodNonce
-    };
-
-    gateway.transaction.sale(sale, function (error, response) {
-        if (!error && response.success) {
-            res.send('Payment done');
-        } else {
-            res.send(response);
-        }
-    });
-});
-
-
 
 
 app.post('/payment', function (req, res) {
@@ -66,16 +47,20 @@ app.post('/payment', function (req, res) {
             res.send(response);
         }
     });*/
-    gateway.transaction.sale({
+    console.log("hi")
+    var sale = {
         amount: "5.00",
         paymentMethodNonce: "fake-valid-nonce",
         credit_card: {
             number: "4111111111111111"
         }
-    }, function (err, response) {
+    }
+    console.log(sale)
+    gateway.transaction.sale(sale, function (err, response) {
         if (!err && response.success) {
             res.send('Payment done');
         } else {
+            console.log(response)
             res.send(response);
         }
     });
