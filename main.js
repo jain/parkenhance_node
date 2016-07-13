@@ -48,6 +48,25 @@ app.post('/payment', function (req, res) {
 });
 
 
+app.post('/payment', function (req, res) {
+    var amount = req.body.amount;
+    var paymentMethodNonce = req.body.payment_method_nonce;
+
+    var sale = {
+        amount: amount,
+        paymentMethodNonce: paymentMethodNonce
+    };
+
+    gateway.transaction.sale(sale, function (error, response) {
+        if (!error && response.success) {
+            res.send('Payment done');
+        } else {
+            res.send(response);
+        }
+    });
+});
+
+
 // get info about parking lot
 app.get('/get_parking_lot_info', function (req, res) {
     console.log('parking lot info');
