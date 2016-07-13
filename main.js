@@ -218,6 +218,19 @@ app.post('/hi', function (req, res) {
     res.send(JSON.stringify(j, null, 2));
 });
 
+app.get('/test_res', function (req, res) {
+    request.get('https://parkenhance.firebaseio.com/users/.json?print=pretty', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+
+            var users = JSON.parse(response.body);
+            console.log(users)
+            if ('userid12' in users){
+                console.log('yipee')
+            }
+        }
+    })
+})
+
 app.post('/reserve_spot', function (req, res) {
     console.log(req.body)
     input = req.body
@@ -231,11 +244,11 @@ app.post('/reserve_spot', function (req, res) {
         android_id = input['android_id'];
         name = input['name'];
         position = input['position'];
-        request.get('https://parkenhance.firebaseio.com/lots/.json?print=pretty', function (error, response, body) {
+        request.get('https://parkenhance.firebaseio.com/users/.json?print=pretty', function (error, response, body) {
             if (!error && response.statusCode == 200) {
 
                 var users = JSON.parse(response.body);
-                if (android_id in users.keys()){
+                if (android_id in users){
                     user = users[android_id]
                     urls3 = 'https://parkenhance.firebaseio.com/lots/' + user['lot'] + '/map/' + user['x'] + '/' + user['y'] + '/.json'
                     console.log(urls3)
