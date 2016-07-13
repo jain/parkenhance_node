@@ -18,6 +18,38 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(cors())
 
 
+app.get("/help_message", function (req, res) {
+    if ('msg' in req.query && 'id' in req.query && 'lot' in req.query) {
+        console.log(req.query)
+        msg = req.query['msg'];
+        id = req.query['id'];
+        lot = req.query['lot'];
+        urls = 'https://parkenhance.firebaseio.com/helpmessages/.json'
+        d1 = {}
+        d1['lot_name'] = lot
+        d1['msg'] = msg
+        d = {}
+        d[id] = d1;
+        console.log(d)
+        request({
+            url: urls,
+            method: 'PATCH',
+            json: d
+        }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                console.log('yay')
+                res.send(response);
+                return
+            } else {
+                console.log('boo')
+                res.status(404).send("501 Error Firebase Query");
+                return
+            }
+        });
+    } else {
+        res.status(404).send("missing params");
+    }
+});
 
 app.get("/owner_message", function (req, res) {
     if ('msg' in req.query && 'id' in req.query && 'lot' in req.query) {
