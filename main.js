@@ -52,12 +52,25 @@ app.post('/payment', function (req, res) {
     var amount = req.body.amount;
     //var paymentMethodNonce = req.body.payment_method_nonce;
 
-    var sale = {
+    /*var sale = {
         amount: amount,
         paymentMethodNonce: "fake-valid-nonce"
     };
 
     gateway.transaction.sale(sale, function (error, response) {
+        if (!error && response.success) {
+            res.send('Payment done');
+        } else {
+            res.send(response);
+        }
+    });*/
+    gateway.transaction.sale({
+        amount: "5.00",
+        paymentMethodNonce: "fake-valid-nonce",
+        options: {
+            submitForSettlement: true
+        }
+    }, function (err, result) {
         if (!error && response.success) {
             res.send('Payment done');
         } else {
