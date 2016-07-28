@@ -1,0 +1,289 @@
+{
+  "helpmessages": {
+    "id": {
+      "lot_name": "lot",
+      "msg": "msg"
+    },
+    "userid12": {
+      "lot_name": "lot2",
+      "msg": "help"
+    }
+  },
+  "lots": {
+    "lot1": {
+      "empty_spots": 8,
+      "latitude": 33.89758,
+      "longitude": -84.0041631,
+      "map": [
+        [
+          [
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 10
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 10
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 10
+            }
+          ],
+          [
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 15
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 1
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 1
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 10
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 10
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 10
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 14
+            }
+          ],
+          [
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 0
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 0
+            },
+            {
+              "group": 2,
+              "reservation": "droid_id",
+              "type": 0
+            },
+            {
+              "group": 2,
+              "reservation": "droid_id",
+              "type": 0
+            }
+          ],
+          [
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 0
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 0
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 1
+            },
+            {
+              "group": 2,
+              "reservation": "droid_id",
+              "type": 0
+            }
+          ],
+          [
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 11
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 11
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 11
+            },
+            {
+              "group": 1,
+              "reservation": "droid_id",
+              "type": 11
+            }
+          ]
+        ]
+      ],
+      "msgs": {
+        "id": "msg"
+      },
+      "parking_spots": 26
+    },
+    "lot2": {
+      "empty_spots": 6,
+      "latitude": 33.9151804,
+      "longitude": -84.0098833,
+      "map": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            10,
+            10,
+            10,
+            14
+          ],
+          [
+            0,
+            0,
+            0,
+            14
+          ],
+          [
+            0,
+            0,
+            0,
+            14
+          ],
+          [
+            11,
+            11,
+            11,
+            11
+          ]
+        ]
+      ],
+      "msgs": {
+        "user id": "test message",
+        "userid12": "hi"
+      },
+      "parking_spots": 6
+    },
+    "lot3": {
+      "empty_spots": 0,
+      "latitude": 33.776834,
+      "longitude": -84.399186,
+      "map": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            10,
+            10,
+            10,
+            14
+          ],
+          [
+            2,
+            1,
+            2,
+            14
+          ],
+          [
+            1,
+            2,
+            2,
+            14
+          ],
+          [
+            11,
+            11,
+            11,
+            11
+          ]
+        ]
+      ],
+      "parking_spots": 6
+    }
+  },
+  "managers": {
+    "manager1": {
+      "lots": [
+        "lot1",
+        "lot2",
+        "lot3",
+        "lot4",
+        "lot5"
+      ],
+      "settings": {
+        "email": "manager1@parkenhance.com",
+        "password": "password1",
+        "phone": "111-111-1111"
+      }
+    },
+    "manager2": {
+      "lots": [
+        "lot10",
+        "lot11"
+      ],
+      "settings": {
+        "email": "manager2@parkenhance.com",
+        "password": "password2",
+        "phone": "222-222-2222"
+      }
+    }
+  },
+  "spots": {
+    "droid_id": {
+      "lot_name": "(0, 0, 0)"
+    }
+  },
+  "users": {
+    "id": {
+      "lot": "name",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "userid12": {
+      "lot": "lot1",
+      "x": 0,
+      "y": 1,
+      "z": 2
+    }
+  }
+}
