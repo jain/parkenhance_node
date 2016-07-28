@@ -92,6 +92,43 @@ app.get("/client_token", function (req, res) {
     });
 });
 
+app.get('/pay', function (req, res) {
+    console.log(req.body);
+    //var amount = req.body.amount;
+    //var number = req.body.number;
+    var amount = "15.00";
+    var number = "4111111111111111"
+    var sale = {
+        amount: amount,
+        payment_method_nonce: "fake-valid-nonce",
+        credit_card: {
+            number: number
+        }
+    }
+    //console.log(sale)
+
+    gateway.transaction.sale(sale, function (error, response) {
+        if (!error && response.success) {
+            res.send('Payment done');
+        } else {
+            res.send(response);
+        }
+    });
+    /*console.log('hi');
+     var creditRequest = {
+     amount: "15.00",
+     creditCard: {
+     number: '4111111111111111',
+     expirationMonth: '05',
+     expirationYear: '2017'
+     }
+     payment_method_nonce: "fake-valid-nonce",
+     merchant_account_id: "z4j2zkrf28vfnwxp"
+     };
+     gateway.transaction.credit(creditRequest,  function (err, result) {
+     });*/
+});
+
 
 app.post('/payment', function (req, res) {
     var amount = req.body.amount;
@@ -241,7 +278,7 @@ app.get('/cancel', function (req, res) {
                     }, function (error4, response4, body4) {
 
                     })
-                    url4 ='https://parkenhance.firebaseio.com/users/'+android_id+'/.json?print=pretty'
+                    url4 = 'https://parkenhance.firebaseio.com/users/' + android_id + '/.json?print=pretty'
                     request({
                         url: url4,
                         method: 'DELETE'
@@ -272,7 +309,7 @@ app.post('/reserve_spot', function (req, res) {
             if (!error && response.statusCode == 200) {
 
                 var users = JSON.parse(response.body);
-                if (android_id in users){
+                if (android_id in users) {
                     user = users[android_id]
                     urls3 = 'https://parkenhance.firebaseio.com/lots/' + user['lot'] + '/map/' + user['x'] + '/' + user['y'] + '/.json'
                     console.log(urls3)
