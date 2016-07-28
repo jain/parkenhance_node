@@ -92,12 +92,12 @@ app.get("/client_token", function (req, res) {
     });
 });
 
-app.get('/pay', function (req, res) {
+app.post('/pay', function (req, res) {
     console.log(req.body);
-    //var amount = req.body.amount;
-    //var number = req.body.number;
-    var amount = "15.00";
-    var number = "4111111111111111"
+    var amount = req.body.amount;
+    var number = req.body.number;
+    //var amount = "15.00";
+    //var number = "4111111111111111"
     var sale = {
         amount: amount,
         payment_method_nonce: "fake-valid-nonce",
