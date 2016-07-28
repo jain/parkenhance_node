@@ -191,59 +191,63 @@ app.get('/near_lots', function (req, res) {
             var lotStatus = {};
             for (var lot in lots) {
                 /*if (paramPresence) {
-                    if (Math.abs(lat - parseFloat(lots[lot]['latitude'])) > 0.01 || Math.abs(long - parseFloat(lots[lot]['longitude'])) > 0.01) {
-                        continue;
-                    }
-                }*/
-                var details = {};
-                details['latitude'] = lots[lot]['latitude'];
-                details['longitude'] = lots[lot]['longitude'];
-                //console.log(lots[lot]['map'])
-                //console.log(lots[lot]['map'].length)
-                //console.log(lots[lot]['map'][0])
-                var map = lots[lot]['map']
-                var empty = 0;
-                var total = 0;
-                for (var i = 0; i<map.length; i++){
-                    var floor = map[i];
-                    var spots = {}
-                    for (var j = 0; j<floor.length; j++){
-                        for(var k = 0; k<floor[j].length; k++){
-                            var type = floor[j][k]['type'];
-                            var group = floor[j][k]['group']
-                            if(type <=2 ){
-                                if (!(group in spots)) {
-                                    spots[group] = type;
-                                    total++;
-                                    if (type == 0){
-                                        empty++;
+                 if (Math.abs(lat - parseFloat(lots[lot]['latitude'])) > 0.01 || Math.abs(long - parseFloat(lots[lot]['longitude'])) > 0.01) {
+                 continue;
+                 }
+                 }*/
+                try {
+                    var details = {};
+                    details['latitude'] = lots[lot]['latitude'];
+                    details['longitude'] = lots[lot]['longitude'];
+                    //console.log(lots[lot]['map'])
+                    //console.log(lots[lot]['map'].length)
+                    //console.log(lots[lot]['map'][0])
+                    var map = lots[lot]['map']
+                    var empty = 0;
+                    var total = 0;
+                    for (var i = 0; i < map.length; i++) {
+                        var floor = map[i];
+                        var spots = {}
+                        for (var j = 0; j < floor.length; j++) {
+                            for (var k = 0; k < floor[j].length; k++) {
+                                var type = floor[j][k]['type'];
+                                var group = floor[j][k]['group']
+                                if (type <= 2) {
+                                    if (!(group in spots)) {
+                                        spots[group] = type;
+                                        total++;
+                                        if (type == 0) {
+                                            empty++;
+                                        }
                                     }
                                 }
+                                console.log(floor[j][k])
                             }
-                            console.log(floor[j][k])
                         }
                     }
+                    //details['empty_spots'] = lots[lot]['empty_spots'];
+                    //details['parking_spots'] = lots[lot]['parking_spots'];
+                    details['empty_spots'] = empty;
+                    details['parking_spots'] = total;
+                    var ratio = details['empty_spots'] / details['parking_spots'];
+                    switch (true) {
+                        case (ratio == 0):
+                            details['status'] = 'full';
+                            break;
+                        case (ratio == 1):
+                            details['status'] = 'empty';
+                            break;
+                        case (ratio <= 0.5):
+                            details['status'] = 'relatively_full';
+                            break;
+                        case (ratio > 0.5):
+                            details['status'] = 'relatively_empty';
+                            break;
+                    }
+                    lotStatus[lot] = details
+                } catch (err) {
+
                 }
-                //details['empty_spots'] = lots[lot]['empty_spots'];
-                //details['parking_spots'] = lots[lot]['parking_spots'];
-                details['empty_spots'] = empty;
-                details['parking_spots'] = total;
-                var ratio = details['empty_spots'] / details['parking_spots'];
-                switch (true) {
-                    case (ratio == 0):
-                        details['status'] = 'full';
-                        break;
-                    case (ratio == 1):
-                        details['status'] = 'empty';
-                        break;
-                    case (ratio <= 0.5):
-                        details['status'] = 'relatively_full';
-                        break;
-                    case (ratio > 0.5):
-                        details['status'] = 'relatively_empty';
-                        break;
-                }
-                lotStatus[lot] = details
             }
             res.send(JSON.stringify(lotStatus, null, 2));
         } else {
