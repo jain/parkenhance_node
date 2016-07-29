@@ -51,34 +51,44 @@ app.get("/help_message", function (req, res) {
     }
 });
 
-app.get("/owner_message", function (req, res) {
-    if ('msg' in req.query && 'id' in req.query && 'lot' in req.query) {
-        console.log(req.query)
-        msg = req.query['msg'];
-        id = req.query['id'];
-        lot = req.query['lot'];
-        urls = 'https://parkenhance.firebaseio.com/lots/' + lot + '/msgs/.json'
-        d = {}
-        d[id] = msg;
-        console.log(d)
-        request({
-            url: urls,
-            method: 'PATCH',
-            json: d
-        }, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                console.log('yay')
-                res.send(response);
-                return
-            } else {
-                console.log('boo')
-                res.status(404).send("501 Error Firebase Query");
-                return
-            }
-        });
-    } else {
-        res.status(404).send("missing params");
-    }
+app.get('/owner_message', function (req, res) {
+    var msg = req.query['msg'];
+    var id = req.query['id'];
+    var lot = req.query['lot'];
+    var urls = 'https://parkenhance.firebaseio.com/lots/' + lot + '/msgs/.json'
+    request.get(urls, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var msgs = JSON.parse(response.body);
+            //var msgs = response.body
+            var d = {};
+            d['sender'] = id;
+            d['message'] = msg;
+            //msgs.push(d);
+            console.log(msgs);
+            var jsonMessage = {};
+            jsonMessage[msgs.length.toString()] = d;
+            console.log(jsonMessage)
+            request({
+                url: urls,
+                method: 'PATCH',
+                json: jsonMessage
+            }, function (error, response, body) {
+
+                if (!error && response.statusCode == 200) {
+                    console.log('yay')
+                    res.send(response);
+                    return
+                } else {
+                    console.log('boo')
+                    res.status(404).send("501 Error Firebase Query");
+                    return
+                }
+            });
+        } else {
+            res.status(404).send("501 Error Firebase Query");
+        }
+    })
+
 });
 
 
